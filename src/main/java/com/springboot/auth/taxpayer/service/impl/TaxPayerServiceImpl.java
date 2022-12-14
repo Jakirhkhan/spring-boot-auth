@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class TaxPayerServiceImpl implements TaxPayerService {
@@ -27,6 +28,9 @@ public class TaxPayerServiceImpl implements TaxPayerService {
     }
 
     public void saveTaxPayer(TaxPayer taxPayer){
+        if (taxPayer.getId() == null){
+            taxPayer.setId(UUID.randomUUID().toString());
+        }
         taxPayerRepository.save(taxPayer);
     }
 }

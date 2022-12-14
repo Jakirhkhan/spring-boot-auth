@@ -23,10 +23,8 @@ import java.util.UUID;
 @Table(name = "tax-payers")
 public class TaxPayer implements Serializable {
     @Id
-    @GeneratedValue
-    @UuidGenerator(style = UuidGenerator.Style.TIME)
-    @Column(name = "id", updatable = false, nullable = false)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     @Column(name = "first_name", length = 100)
     @NotNull
@@ -66,6 +64,4 @@ public class TaxPayer implements Serializable {
     @Column(name = "date_of_birth")
     @Temporal(TemporalType.DATE)
     private Date dob;
-
-
 }
