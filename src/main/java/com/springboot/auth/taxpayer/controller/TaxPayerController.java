@@ -3,6 +3,7 @@ package com.springboot.auth.taxpayer.controller;
 import com.springboot.auth.taxpayer.entity.TaxPayer;
 import com.springboot.auth.taxpayer.service.TaxPayerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class TaxPayerController {
 
 
     @GetMapping("/tax-payers")
+    @Cacheable(value="resources")
     public List<TaxPayer>  getAll(){
         return taxPayerService.getAllTaxPayer();
     }
