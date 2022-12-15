@@ -26,10 +26,12 @@ public class TaxpayerServiceTest {
     @BeforeEach
     public void setup(){
         taxPayer = TaxPayer.builder()
-                .id(UUID.fromString("CHE222259895"))
+                .id(UUID.randomUUID().toString())
                 .firstName("Ramesh")
                 .lastName("Fadatare")
                 .address("Dhaka")
+                .zone("4")
+                .circle("22")
                 .build();
     }
 }
