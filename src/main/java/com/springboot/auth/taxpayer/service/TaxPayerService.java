@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface TaxPayerService {
 
     List<TaxPayer> getAllTaxPayer();
-    TaxPayer getTaxPayerByTin(int tin);
+    TaxPayer getTaxPayerByTin(Long tin);
     Optional<TaxPayer> getTaxPayerById(String id);
 
     void saveTaxPayer(TaxPayer taxPayer);

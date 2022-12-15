@@ -1,5 +1,6 @@
 package com.springboot.auth.taxpayer.controller;
 
+import com.springboot.auth.exception.ResourceAlreadyExistsException;
 import com.springboot.auth.exception.ResourceNotFoundException;
 import com.springboot.auth.taxpayer.entity.TaxPayer;
 import com.springboot.auth.taxpayer.service.TaxPayerService;
@@ -40,7 +41,13 @@ public class TaxPayerController {
     @PostMapping("/tax-payers")
     @Cacheable(value="taxpayers")
     public void create(@RequestBody TaxPayer taxPayer){
-        taxPayerService.saveTaxPayer(taxPayer);
+        TaxPayer existingTaxPayer = taxPayerService.getTaxPayerByTin(taxPayer.getTin());
+        if (existingTaxPayer == null) {
+            taxPayerService.saveTaxPayer(taxPayer);
+        }
+        else
+            throw new ResourceAlreadyExistsException("Tax Payer already exists!!");
+
     }
 
     @PutMapping("/tax-payers/{id}")

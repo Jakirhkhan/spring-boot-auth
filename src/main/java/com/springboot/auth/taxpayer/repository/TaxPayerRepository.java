@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TaxPayerRepository extends JpaRepository<TaxPayer, String> {
-    TaxPayer getTaxPayerByTin(int tin);
+    TaxPayer getTaxPayerByTin(Long tin);
     TaxPayer save(TaxPayer taxPayer);
 }

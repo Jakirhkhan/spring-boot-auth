@@ -15,7 +15,7 @@ public class TaxPayerServiceImpl implements TaxPayerService {
     @Autowired
     private TaxPayerRepository taxPayerRepository;
     @Override
-    public TaxPayer getTaxPayerByTin(int tin) {
+    public TaxPayer getTaxPayerByTin(Long tin) {
         return taxPayerRepository.getTaxPayerByTin(tin);
     }
 
