@@ -39,11 +39,10 @@ public class TaxPayerController {
     }
 
     @PostMapping("/tax-payers")
-    @Cacheable(value="taxpayers")
-    public void create(@RequestBody TaxPayer taxPayer){
+    public ResponseEntity<TaxPayer> create(@RequestBody TaxPayer taxPayer){
         TaxPayer existingTaxPayer = taxPayerService.getTaxPayerByTin(taxPayer.getTin());
         if (existingTaxPayer == null) {
-            taxPayerService.saveTaxPayer(taxPayer);
+           return new ResponseEntity<TaxPayer>(taxPayerService.saveTaxPayer(taxPayer), HttpStatus.CREATED);
         }
         else
             throw new ResourceAlreadyExistsException("Tax Payer already exists!!");

@@ -27,11 +27,11 @@ public class TaxPayerServiceImpl implements TaxPayerService {
         return taxPayerRepository.findAll();
     }
 
-    public void saveTaxPayer(TaxPayer taxPayer){
+    public TaxPayer saveTaxPayer(TaxPayer taxPayer){
         if (taxPayer.getId() == null){
             taxPayer.setId(UUID.randomUUID().toString());
         }
-        taxPayerRepository.save(taxPayer);
+        return taxPayerRepository.save(taxPayer);
     }
 
 }

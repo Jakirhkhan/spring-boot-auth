@@ -13,7 +13,7 @@ public interface TaxPayerService {
     TaxPayer getTaxPayerByTin(Long tin);
     Optional<TaxPayer> getTaxPayerById(String id);
 
-    void saveTaxPayer(TaxPayer taxPayer);
+    TaxPayer saveTaxPayer(TaxPayer taxPayer);
 
 
 }
