@@ -61,6 +61,10 @@ public class TaxPayer implements Serializable {
     @Column(name = "circle", length = 3)
     private String circle;
 
+    @NotNull
+    @Column(name = "gender", length = 10)
+    private String gender;
+
     @Column(name = "date_of_birth")
     @Temporal(TemporalType.DATE)
     private Date dob;

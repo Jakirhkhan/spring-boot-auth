@@ -15,5 +15,4 @@ public interface TaxPayerService {
 
     TaxPayer saveTaxPayer(TaxPayer taxPayer);
 
-
 }

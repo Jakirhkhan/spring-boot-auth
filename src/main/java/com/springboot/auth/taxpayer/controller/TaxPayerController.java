@@ -32,9 +32,9 @@ public class TaxPayerController {
 
     @GetMapping("/tax-payers/{id}")
     public ResponseEntity<TaxPayer> getTaxPayer(@PathVariable String id){
-        TaxPayer taxPayer1 = taxPayerService.getTaxPayerById(id)
+        TaxPayer taxPayer = taxPayerService.getTaxPayerById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Taxpayer with ID: "+ id + "is not found"));
-        return new ResponseEntity<>(taxPayer1, HttpStatus.OK);
+        return new ResponseEntity<>(taxPayer, HttpStatus.OK);
 
     }
 
