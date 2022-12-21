@@ -25,7 +25,7 @@ public class TaxTransaction implements Serializable {
 
     @NotNull
     @Column(name = "tax_year", length = 9)
-    private String taxYear;
+    private String incomeYear;
 
     @NotNull
     private double salary;

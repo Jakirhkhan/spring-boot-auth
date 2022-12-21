@@ -36,6 +36,11 @@ public class TaxTransactionServiceImpl implements TaxTransactionService {
         taxTransaction.setTotalTax(calculateTax(taxTransaction.getSalary()));
         return taxTransactionRepository.save(taxTransaction);
     }
+
+    @Override
+    public TaxTransaction findByTinAndIncomeYear(Long tin, String incomeYear) {
+        return taxTransactionRepository.findByTinAndIncomeYear(tin,incomeYear);
+    }
     public double calculateTax(double salary) {
         double tax = 0;
         double initialSlab = 300000;

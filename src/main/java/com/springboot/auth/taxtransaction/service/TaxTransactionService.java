@@ -12,6 +12,6 @@ public interface TaxTransactionService {
     List<TaxTransaction> findAll();
     TaxTransaction getByTin(Long tin);
     Optional<TaxTransaction> getTById(String id);
-
+    TaxTransaction findByTinAndIncomeYear(Long tin, String incomeYear);
     TaxTransaction save(TaxTransaction taxTransaction);
 }
