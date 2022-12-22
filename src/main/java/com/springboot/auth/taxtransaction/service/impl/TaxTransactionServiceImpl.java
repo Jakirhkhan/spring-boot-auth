@@ -1,11 +1,16 @@
 package com.springboot.auth.taxtransaction.service.impl;
 
+import com.springboot.auth.exception.ResourceAlreadyExistsException;
+import com.springboot.auth.exception.ResourceNotFoundException;
+import com.springboot.auth.externalapi.ExternalApiCall;
+import com.springboot.auth.taxpayer.entity.TaxPayer;
 import com.springboot.auth.taxtransaction.entity.TaxTransaction;
 import com.springboot.auth.taxtransaction.repository.TaxTransactionRepository;
 import com.springboot.auth.taxtransaction.service.TaxTransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +38,16 @@ public class TaxTransactionServiceImpl implements TaxTransactionService {
 
     @Override
     public TaxTransaction save(TaxTransaction taxTransaction) {
-        taxTransaction.setTotalTax(calculateTax(taxTransaction.getSalary()));
+        TaxTransaction existingTaxTransaction = taxTransactionRepository.findByTinAndIncomeYear(taxTransaction.getTin(), taxTransaction.getIncomeYear());
+        if(existingTaxTransaction!=null){
+            throw new ResourceNotFoundException("Tax already calculated for TIN-"+taxTransaction.getTin()+" of the Income Year-"+taxTransaction.getIncomeYear());
+        }
+        String uri = "http://localhost:8090/api/v1/tax-payers/tin/"+taxTransaction.getTin();
+        TaxPayer taxpayer = (TaxPayer) ExternalApiCall.getRemoveObject(uri);
+        if(taxpayer==null){
+            throw new ResourceNotFoundException("Tax Payer not found for TIN-"+taxTransaction.getTin());
+        }
+        taxTransaction.setTotalTax(calculateTax(taxpayer.getGender(),taxTransaction.getSalary()));
         return taxTransactionRepository.save(taxTransaction);
     }
 
@@ -41,9 +55,9 @@ public class TaxTransactionServiceImpl implements TaxTransactionService {
     public TaxTransaction findByTinAndIncomeYear(Long tin, String incomeYear) {
         return taxTransactionRepository.findByTinAndIncomeYear(tin,incomeYear);
     }
-    public double calculateTax(double salary) {
+    public double calculateTax(String gender, double salary) {
         double tax = 0;
-        double initialSlab = 300000;
+        double initialSlab = (gender.equals("M"))?300000:350000;
         if(salary>initialSlab+1300000) {
             tax += 100000*0.05;
             tax += 300000*0.1;

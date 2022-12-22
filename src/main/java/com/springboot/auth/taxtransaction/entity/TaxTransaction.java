@@ -14,7 +14,6 @@ import java.io.Serializable;
 @Builder
 @Table(name = "Tax_transactions")
 public class TaxTransaction implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;

@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 public class TaxTransactionController {
-
     @Autowired
     TaxTransactionService taxTransactionService;
     @GetMapping("/tax-transactions")

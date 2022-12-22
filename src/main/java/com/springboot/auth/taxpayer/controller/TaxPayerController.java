@@ -37,7 +37,11 @@ public class TaxPayerController {
         return new ResponseEntity<>(taxPayer, HttpStatus.OK);
 
     }
-
+    @GetMapping("/tax-payers/tin/{tin}")
+    public ResponseEntity<?> getTaxPayerByTin(@PathVariable Long tin){
+        TaxPayer taxPayer = taxPayerService.getTaxPayerByTin(tin);
+        return new ResponseEntity<>(taxPayer, HttpStatus.OK);
+    }
     @PostMapping("/tax-payers")
     public ResponseEntity<TaxPayer> create(@RequestBody TaxPayer taxPayer){
         TaxPayer existingTaxPayer = taxPayerService.getTaxPayerByTin(taxPayer.getTin());
@@ -46,7 +50,6 @@ public class TaxPayerController {
         }
         else
             throw new ResourceAlreadyExistsException("Tax Payer already exists!!");
-
     }
 
     @PutMapping("/tax-payers/{id}")

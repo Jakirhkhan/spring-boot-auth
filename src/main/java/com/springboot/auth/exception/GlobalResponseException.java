@@ -1,6 +1,7 @@
 package com.springboot.auth.exception;
 
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,21 @@ public class GlobalResponseException extends ResponseEntityExceptionHandler {
                 "Resource Already Exist",
                 "409",
                 details);
+        return ResponseEntityBuilder.build(err);
+    }
+    @ExceptionHandler({ DataIntegrityViolationException.class, SQLIntegrityConstraintViolationException.class })
+    public ResponseEntity<?> handleConflictException(final Exception ex){
+
+        List<String> details = new ArrayList<>();
+        details.add(ex.getMessage());
+
+        ApiError err = new ApiError(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage(),
+                "400",
+                details);
+
         return ResponseEntityBuilder.build(err);
     }
 
